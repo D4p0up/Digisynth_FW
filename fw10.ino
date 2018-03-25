@@ -4,25 +4,26 @@
 
 // Global Variables
 unsigned char buttons;
-
+unsigned int freq=0;
 /*=============================================================================
  * INIT : Called once at Startup
  *=============================================================================*/
 void setup() {
   pins_init();        // Setting Proper pin states
+  analogWriteResolution(12);
   
-  
-  test_full_loop(10); // LED Pulses for Setup Exit
+  test_full_loop(100); // LED Pulses for Setup Exit
 }
 
 /*=============================================================================
  * MAIN LOOP - Repeated
  *=============================================================================*/
 void loop() {
-
+analogWrite(A14,freq++);
 //test_full_loop(100);
 //test_led_loop(100);
-test_button();
+//test_button();
+if (freq>2048) freq=0;
 }
 
 
@@ -44,7 +45,8 @@ void pins_init(void) {
   pinMode(SW3, INPUT);
   pinMode(SW4, INPUT);
   pinMode(SW5, INPUT);
-  pinMode(SW6, INPUT);          
+  pinMode(SW6, INPUT); 
+  pinMode(A14, OUTPUT);         
 }
 /*=============================================================================
  * test_full_loop : loops among the Whole LEDs
