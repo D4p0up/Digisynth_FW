@@ -22,3 +22,14 @@
 #define SLATCH  10  // Teensy : SS     595 : 12_RCLK
 #define SMOSI   11  // Teensy : MOSI   595 : 14_SER
 #define SCLK    13  // Teensy : CLK    595 : 11_SRCLK
+// Potentiometer Pins
+#define FREQ    A6
+#define ATTACK  A8
+#define RELEASE A9
+#define COARSE1 A0
+#define COARSE2 A5
+#define MIX     A2
+#define MOD     A4
+#define FM      A7
+#define DECAY   A3
+#define RES     A1

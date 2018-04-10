@@ -17,6 +17,18 @@ AudioConnection          patchCord1(drum1, dac1);
 // Global Variables
 unsigned char buttons;
 unsigned int freq=0;
+// Potentiometer Readings
+unsigned int pot_FREQ;
+unsigned int pot_ATTACK;
+unsigned int pot_RELEASE;
+unsigned int pot_COARSE1;
+unsigned int pot_COARSE2;
+unsigned int pot_MIX;
+unsigned int pot_MOD;
+unsigned int pot_FM;
+unsigned int pot_DECAY;
+unsigned int pot_RES;
+
 /*=============================================================================
  * INIT : Called once at Startup
  *=============================================================================*/
@@ -28,16 +40,25 @@ void setup() {
   drum1.length(100);
   AudioInterrupts();  
   test_full_loop(100); // LED Pulses for Setup Exit
+    // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
 }
 
 /*=============================================================================
  * MAIN LOOP - Repeated
  *=============================================================================*/
 void loop() {
-if (!digitalRead(SW1)) {
-  drum1.noteOn();
-  digitalWrite(D9,HIGH);
-} else digitalWrite(D9,LOW);
+  pot_FREQ = analogRead(FREQ);
+  pot_ATTACK = analogRead(ATTACK);
+  pot_RELEASE = analogRead(RELEASE);
+  pot_COARSE1 = analogRead(COARSE1); 
+  pot_COARSE2 = analogRead(COARSE2);
+  pot_MIX = analogRead(MIX);
+  pot_FM = analogRead(FM);
+  pot_DECAY = analogRead(DECAY); 
+  pot_MOD = analogRead(MOD);
+  pot_RES = analogRead(RES);          
+  Serial.println(pot_RES);
 //test_full_loop(100);
 //test_led_loop(100);
 //test_button();
@@ -63,7 +84,17 @@ void pins_init(void) {
   pinMode(SW4, INPUT);
   pinMode(SW5, INPUT);
   pinMode(SW6, INPUT); 
-  pinMode(A14, OUTPUT);         
+  pinMode(A14, OUTPUT);
+  pinMode(A0,  INPUT);
+  pinMode(A1,  INPUT);
+  pinMode(A2,  INPUT);
+  pinMode(A3,  INPUT);
+  pinMode(A4,  INPUT);
+  pinMode(A5,  INPUT);
+  pinMode(A6,  INPUT);
+  pinMode(A7,  INPUT);
+  pinMode(A8,  INPUT);
+  pinMode(A9,  INPUT);         
 }
 /*=============================================================================
  * test_full_loop : loops among the Whole LEDs
