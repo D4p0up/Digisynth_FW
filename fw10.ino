@@ -1,6 +1,18 @@
 /* DIGISYNTH Firmware V0.02*/
 
 #include "digisynth.h"
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+// GUItool: begin automatically generated code
+AudioSynthSimpleDrum     drum1;          //xy=334,252
+AudioOutputAnalog        dac1;           //xy=555,251
+AudioConnection          patchCord1(drum1, dac1);
+// GUItool: end automatically generated code
+
 
 // Global Variables
 unsigned char buttons;
@@ -10,8 +22,11 @@ unsigned int freq=0;
  *=============================================================================*/
 void setup() {
   pins_init();        // Setting Proper pin states
-  analogWriteResolution(12);
-  
+  AudioMemory(15);
+  AudioNoInterrupts();  
+  drum1.frequency(100);
+  drum1.length(100);
+  AudioInterrupts();  
   test_full_loop(100); // LED Pulses for Setup Exit
 }
 
@@ -19,11 +34,13 @@ void setup() {
  * MAIN LOOP - Repeated
  *=============================================================================*/
 void loop() {
-analogWrite(A14,freq++);
+if (!digitalRead(SW1)) {
+  drum1.noteOn();
+  digitalWrite(D9,HIGH);
+} else digitalWrite(D9,LOW);
 //test_full_loop(100);
 //test_led_loop(100);
 //test_button();
-if (freq>2048) freq=0;
 }
 
 
